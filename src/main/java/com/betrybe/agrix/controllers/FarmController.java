@@ -1,7 +1,7 @@
 package com.betrybe.agrix.controllers;
 
-import com.betrybe.agrix.controllers.dto.FarmDTO;
-import com.betrybe.agrix.controllers.dto.ResponseDTO;
+import com.betrybe.agrix.controllers.dto.FarmDto;
+import com.betrybe.agrix.controllers.dto.ResponseDto;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.services.FarmService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,21 +12,36 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * The type Farm controller.
+ */
 @RestController
 @RequestMapping(value = "/farms")
 public class FarmController {
 
   private final FarmService farmService;
+
+  /**
+   * Instantiates a new Farm controller.
+   *
+   * @param farmService the farm service
+   */
   @Autowired
   public FarmController(FarmService farmService) {
     this.farmService = farmService;
   }
 
+  /**
+   * Create farm response entity.
+   *
+   * @param farmDto the farm dto
+   * @return the response entity
+   */
   @PostMapping()
-  public ResponseEntity<ResponseDTO<Farm>> createFarm(@RequestBody FarmDTO farmDTO) {
-    Farm newFarm = farmService.insertFarm(farmDTO.toFarm());
-    ResponseDTO<Farm> responseDTO = new ResponseDTO<>("Fazenda criada com sucesso", newFarm);
-    return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
+  public ResponseEntity<ResponseDto<Farm>> createFarm(@RequestBody FarmDto farmDto) {
+    Farm newFarm = farmService.insertFarm(farmDto.toFarm());
+    ResponseDto<Farm> responseDto = new ResponseDto<>("Fazenda criada com sucesso", newFarm);
+    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
   }
 
 }
