@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * The type Farm controller.
  */
 @RestController
-@RequestMapping(value = "/farms")
+@RequestMapping("/farms")
 public class FarmController {
 
   private final FarmService farmService;
@@ -40,7 +41,8 @@ public class FarmController {
    */
   @PostMapping
   public ResponseEntity<FarmDto> createFarm(@RequestBody FarmDto farmDto) {
-    Farm newFarm = farmService.insertFarm(farmDto.toFarm());
+    Farm newFarm = farmService.createFarm(farmDto.toFarm());
+
     return ResponseEntity.status(HttpStatus.CREATED).body(FarmDto.toDto(newFarm));
   }
 
@@ -51,8 +53,23 @@ public class FarmController {
    */
   @GetMapping
   public ResponseEntity<List<FarmDto>> getAllFarms() {
-    List<Farm> farms = farmService.getAllFarms();
-    List<FarmDto> farmsDto = farms.stream().map(FarmDto::toDto).toList();
-    return ResponseEntity.ok(farmsDto);
+    List<Farm> allFarms = farmService.getAllFarms();
+    List<FarmDto> allFarmsDto = allFarms.stream()
+        .map(FarmDto::toDto).toList();
+
+    return ResponseEntity.ok(allFarmsDto);
+  }
+
+  /**
+   * Gets farm by id.
+   *
+   * @param id the id
+   * @return the farm by id
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<Farm> getFarmById(@PathVariable Long id) {
+    Farm farm = farmService.getFarmById(id);
+
+    return ResponseEntity.ok(farm);
   }
 }
