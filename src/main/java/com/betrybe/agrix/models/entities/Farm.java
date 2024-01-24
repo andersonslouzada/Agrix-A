@@ -1,10 +1,13 @@
 package com.betrybe.agrix.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 
 /**
  * The type Farm.
@@ -19,22 +22,29 @@ public class Farm {
   private String name;
   private Double size;
 
+  @OneToMany(mappedBy = "farm")
+  @JsonIgnore
+  private List<Crop> crops;
+
   /**
    * Instantiates a new Farm.
    */
-  public Farm() {}
+  public Farm() {
+  }
 
   /**
    * Instantiates a new Farm.
    *
-   * @param id   the id
-   * @param name the name
-   * @param size the size
+   * @param id    the id
+   * @param name  the name
+   * @param size  the size
+   * @param crops the crops
    */
-  public Farm(Long id, String name, Double size) {
+  public Farm(Long id, String name, Double size, List<Crop> crops) {
     this.id = id;
     this.name = name;
     this.size = size;
+    this.crops = crops;
   }
 
   /**
@@ -89,5 +99,23 @@ public class Farm {
    */
   public void setSize(Double size) {
     this.size = size;
+  }
+
+  /**
+   * Gets crops.
+   *
+   * @return the crops
+   */
+  public List<Crop> getCrops() {
+    return crops;
+  }
+
+  /**
+   * Sets crops.
+   *
+   * @param crops the crops
+   */
+  public void setCrops(List<Crop> crops) {
+    this.crops = crops;
   }
 }

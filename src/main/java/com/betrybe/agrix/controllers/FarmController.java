@@ -21,11 +21,6 @@ public class FarmController {
 
   private final FarmService farmService;
 
-  /**
-   * Instantiates a new Farm controller.
-   *
-   * @param farmService the farm service
-   */
   @Autowired
   public FarmController(FarmService farmService) {
     this.farmService = farmService;
@@ -37,11 +32,10 @@ public class FarmController {
    * @param farmDto the farm dto
    * @return the response entity
    */
-  @PostMapping()
-  public ResponseEntity<ResponseDto<Farm>> createFarm(@RequestBody FarmDto farmDto) {
+  @PostMapping
+  public ResponseEntity<FarmDto> createFarm(@RequestBody FarmDto farmDto) {
     Farm newFarm = farmService.insertFarm(farmDto.toFarm());
-    ResponseDto<Farm> responseDto = new ResponseDto<>("Fazenda criada com sucesso", newFarm);
-    return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
+    return ResponseEntity.status(HttpStatus.CREATED).body(FarmDto.toDto(newFarm));
   }
 
 }
