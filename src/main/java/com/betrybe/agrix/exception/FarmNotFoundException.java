@@ -3,6 +3,6 @@ package com.betrybe.agrix.exception;
 /**
  * The type Farm not found exception.
  */
-public class NotFoundException extends RuntimeException {
+public class FarmNotFoundException extends RuntimeException {
 
 }

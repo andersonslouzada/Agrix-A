@@ -1,6 +1,7 @@
 package com.betrybe.agrix.advice;
 
-import com.betrybe.agrix.exception.NotFoundException;
+import com.betrybe.agrix.exception.CropNotFoundException;
+import com.betrybe.agrix.exception.FarmNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,13 +19,18 @@ public class GeneralControllerAdvice {
    * @param e the e
    * @return the response entity
    */
-  @ExceptionHandler(NotFoundException.class)
-  public ResponseEntity<String> handleNotFoundException(NotFoundException e) {
+  @ExceptionHandler(FarmNotFoundException.class)
+  public ResponseEntity<String> handleNotFoundException(FarmNotFoundException e) {
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Fazenda não encontrada!");
   }
 
   @ExceptionHandler
   public ResponseEntity<String> handleGenericException(RuntimeException e) {
     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro interno!");
+  }
+
+  @ExceptionHandler(CropNotFoundException.class)
+  public ResponseEntity<String> handleCropNotFoundException(CropNotFoundException e) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Plantação não encontrada!");
   }
 }
