@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,6 +41,14 @@ public class CropController {
     List<CropDto> allCropsDto = allCrops.stream()
         .map(CropDto::toDto)
         .toList();
+    
     return ResponseEntity.ok(allCropsDto);
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<CropDto> getCropById(@PathVariable Long id) {
+    Crop crop = cropService.getCropById(id);
+
+    return ResponseEntity.ok(CropDto.toDto(crop));
   }
 }
