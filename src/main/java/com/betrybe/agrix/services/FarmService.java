@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class FarmService {
 
   private final FarmRepository farmRepository;
+  private final CropRepository cropRepository;
 
   /**
    * Instantiates a new Farm service.
@@ -25,6 +26,7 @@ public class FarmService {
    */
   public FarmService(FarmRepository farmRepository, CropRepository cropRepository) {
     this.farmRepository = farmRepository;
+    this.cropRepository = cropRepository;
   }
 
   /**
@@ -59,6 +61,25 @@ public class FarmService {
     }
 
     return optionalFarm.get();
+  }
+
+  /**
+   * Insert crop crop.
+   *
+   * @param id   the id
+   * @param crop the crop
+   * @return the crop
+   */
+  public Crop insertCrop(Long id, Crop crop) {
+    Optional<Farm> farmOptional = farmRepository.findById(id);
+    if (farmOptional.isEmpty()) {
+      throw new NotFoundException();
+    }
+
+    Farm farm = farmOptional.get();
+    crop.setFarm(farm);
+
+    return cropRepository.save(crop);
   }
 
   /**

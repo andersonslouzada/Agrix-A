@@ -76,14 +76,28 @@ public class FarmController {
   }
 
   /**
+   * Insert crop response entity.
+   *
+   * @param id      the id
+   * @param cropDto the crop dto
+   * @return the response entity
+   */
+  @PostMapping("/{id}/crops")
+  public ResponseEntity<CropDto> insertCrop(@PathVariable Long id,
+      @RequestBody CropDto cropDto) {
+    Crop newCrop = farmService.insertCrop(id, cropDto.toCrop());
+    return ResponseEntity.status(HttpStatus.CREATED).body(CropDto.toDto(newCrop));
+  }
+
+  /**
    * Gets crops by farm id.
    *
-   * @param farmId the farmId
-   * @return the crops by farm farmId
+   * @param id the id
+   * @return the crops by farm id
    */
-  @GetMapping("/{farmId}/crops")
-  public ResponseEntity<List<CropDto>> getCropsByFarmId(@PathVariable Long farmId) {
-    List<Crop> crops = farmService.getCropsByFarmId(farmId);
+  @GetMapping("/{id}/crops")
+  public ResponseEntity<List<CropDto>> getCropsByFarmId(@PathVariable Long id) {
+    List<Crop> crops = farmService.getCropsByFarmId(id);
     List<CropDto> cropsDto = crops.stream()
         .map(CropDto::toDto)
         .toList();
