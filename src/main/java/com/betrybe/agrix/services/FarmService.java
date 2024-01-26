@@ -16,17 +16,32 @@ import org.springframework.stereotype.Service;
 public class FarmService {
 
   private final FarmRepository farmRepository;
-  private final CropRepository cropRepository;
 
+  /**
+   * Instantiates a new Farm service.
+   *
+   * @param farmRepository the farm repository
+   * @param cropRepository the crop repository
+   */
   public FarmService(FarmRepository farmRepository, CropRepository cropRepository) {
     this.farmRepository = farmRepository;
-    this.cropRepository = cropRepository;
   }
 
+  /**
+   * Create farm farm.
+   *
+   * @param farm the farm
+   * @return the farm
+   */
   public Farm createFarm(Farm farm) {
     return farmRepository.save(farm);
   }
 
+  /**
+   * Gets all farms.
+   *
+   * @return the all farms
+   */
   public List<Farm> getAllFarms() {
     return farmRepository.findAll();
   }
@@ -46,6 +61,12 @@ public class FarmService {
     return optionalFarm.get();
   }
 
+  /**
+   * Gets crops by farm id.
+   *
+   * @param id the id
+   * @return the crops by farm id
+   */
   public List<Crop> getCropsByFarmId(Long id) {
     Optional<Farm> farmOptional = farmRepository.findById(id);
     if (farmOptional.isEmpty()) {

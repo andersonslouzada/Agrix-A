@@ -1,6 +1,8 @@
 package com.betrybe.agrix.controllers;
 
+import com.betrybe.agrix.controllers.dto.CropDto;
 import com.betrybe.agrix.controllers.dto.FarmDto;
+import com.betrybe.agrix.models.entities.Crop;
 import com.betrybe.agrix.models.entities.Farm;
 import com.betrybe.agrix.services.FarmService;
 import java.util.List;
@@ -71,5 +73,20 @@ public class FarmController {
     Farm farm = farmService.getFarmById(id);
 
     return ResponseEntity.ok(farm);
+  }
+
+  /**
+   * Gets crops by farm id.
+   *
+   * @param id the id
+   * @return the crops by farm id
+   */
+  @GetMapping("/{farmId}/crops")
+  public ResponseEntity<List<CropDto>> getCropsByFarmId(@PathVariable Long id) {
+    List<Crop> crops = farmService.getCropsByFarmId(id);
+    List<CropDto> cropsDto = crops.stream()
+        .map(CropDto::toDto)
+        .toList();
+    return ResponseEntity.ok(cropsDto);
   }
 }
