@@ -76,7 +76,4 @@ public class FarmService {
     Farm farm = farmOptional.get();
     return farm.getCrops();
   }
-  }
-
-
 }

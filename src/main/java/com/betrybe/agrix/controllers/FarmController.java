@@ -78,12 +78,12 @@ public class FarmController {
   /**
    * Gets crops by farm id.
    *
-   * @param id the id
-   * @return the crops by farm id
+   * @param farmId the farmId
+   * @return the crops by farm farmId
    */
   @GetMapping("/{farmId}/crops")
-  public ResponseEntity<List<CropDto>> getCropsByFarmId(@PathVariable Long id) {
-    List<Crop> crops = farmService.getCropsByFarmId(id);
+  public ResponseEntity<List<CropDto>> getCropsByFarmId(@PathVariable Long farmId) {
+    List<Crop> crops = farmService.getCropsByFarmId(farmId);
     List<CropDto> cropsDto = crops.stream()
         .map(CropDto::toDto)
         .toList();
