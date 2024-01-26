@@ -41,10 +41,16 @@ public class CropController {
     List<CropDto> allCropsDto = allCrops.stream()
         .map(CropDto::toDto)
         .toList();
-    
+
     return ResponseEntity.ok(allCropsDto);
   }
 
+  /**
+   * Gets crop by id.
+   *
+   * @param id the id
+   * @return the crop by id
+   */
   @GetMapping("/{id}")
   public ResponseEntity<CropDto> getCropById(@PathVariable Long id) {
     Crop crop = cropService.getCropById(id);
